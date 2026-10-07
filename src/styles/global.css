@@ -1,0 +1,105 @@
+:root {
+  --bg: #0a0a0a;
+  --surface: #101010;
+  --text: #f5f5f5;
+  --text-muted: #9a9a9a;
+  --border: #262626;
+
+  --content-width: 640px;
+  --header-height: 56px;
+  --radius: 10px;
+  --border-hover: #4a4a4a;
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --reveal-duration: 600ms;
+  --reveal-distance: 12px;
+  --switch-duration: 100ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a,
+button {
+  transition:
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    opacity var(--switch-duration) ease;
+}
+
+.hoverable {
+  transition:
+    border-color var(--motion-base) ease,
+    transform var(--motion-base) ease;
+}
+
+.hoverable:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition:
+    opacity var(--reveal-duration) ease,
+    transform var(--reveal-duration) ease;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+main,
+.nav {
+  transition: opacity var(--switch-duration) ease;
+}
+
+.is-switching main,
+.is-switching .nav,
+.is-switching .lang {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hoverable:hover {
+    transform: none;
+  }
+}
