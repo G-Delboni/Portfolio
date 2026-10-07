@@ -45,6 +45,10 @@ a {
   text-decoration: none;
 }
 
+.hero {
+  position: relative;
+}
+
 a,
 button {
   transition:
@@ -62,6 +66,35 @@ button {
 .hoverable:hover {
   border-color: var(--border-hover);
   transform: translateY(-2px);
+}
+
+.tech ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tech li {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.cardtech {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  padding: 0.55rem 0.8rem;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-size: 0.85rem;
 }
 
 [data-reveal] {

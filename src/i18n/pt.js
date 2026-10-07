@@ -13,7 +13,7 @@ export default {
     'Desenvolvedor focado no back-end, utilizando Java, Spring Boot e banco de dados MySQL/Postgre.',
   'projects.title': 'Projetos',
   'experience.title': 'Experiência',
-  'experience.empty': 'Em breve',
+  'experience.empty': 'Em breve...',
   'contact.title': 'Contato',
   'contact.text': 'Quer trabalhar comigo ou só dizer oi? Me mande uma mensagem.',
 }

@@ -28,8 +28,8 @@ export const projects = [
   {
     name: 'VittaDiet',
     description: {
-      en: 'Full-stack web app for nutritional tracking.',
-      pt: 'Aplicação web full-stack para acompanhamento nutricional.',
+      en: 'Full-stack web app for nutritional tracking (In development). ',
+      pt: 'Aplicação web full-stack para acompanhamento nutricional (Em desenvolvimento).',
     },
     stack: ['Java', 'Spring Boot', 'Vue.js', 'PostgreSQL', 'Docker'],
     links: [{ label: 'GitHub', url: 'https://github.com/G-Delboni/VittaDiet', icon: 'mdi:github' }],

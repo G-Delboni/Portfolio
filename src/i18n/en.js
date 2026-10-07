@@ -13,7 +13,7 @@ export default {
     "I'm a back-end focused developer, implementing REST APIs with Java, Spring Boot, and MySQL/Postgre databases.",
   'projects.title': 'Projects',
   'experience.title': 'Experience',
-  'experience.empty': 'Coming soon',
+  'experience.empty': 'Coming soon...',
   'contact.title': 'Contact me',
   'contact.text': 'Interested in working together or just want to say hi? Send me a message.',
 }

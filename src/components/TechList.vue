@@ -7,14 +7,19 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <section class="tech">
-    <h2>{{ t('tech.title') }}</h2>
-    <ul>
-      <li v-for="tech in technologies" :key="tech.name">
-        <Icon :icon="tech.icon" width="16" height="16" aria-hidden="true" />
-        {{ tech.name }}
-      </li>
-    </ul>
+  <section id="technologies">
+    <section class="tech">
+      <h2>{{ t('tech.title') }}</h2>
+
+      <ul>
+        <li v-for="tech in technologies" :key="tech.name">
+          <div class="cardtech hoverable">
+            <Icon :icon="tech.icon" width="16" height="16" aria-hidden="true" />
+            {{ tech.name }}
+          </div>
+        </li>
+      </ul>
+    </section>
   </section>
 </template>
 
@@ -45,5 +50,13 @@ li {
   border-radius: 6px;
   padding: 0.3rem 0.7rem;
   font-size: 0.85rem;
+}
+
+.links a {
+  display: flex;
+}
+
+.links a:hover {
+  color: var(--text);
 }
 </style>

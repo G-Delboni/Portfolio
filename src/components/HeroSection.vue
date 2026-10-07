@@ -9,23 +9,28 @@ const { t } = useI18n()
 <template>
   <section class="hero">
     <div class="card hoverable">
-      <h1>{{ profile.name }}</h1>
-      <p class="location">{{ t('hero.location') }}</p>
-      <p class="description">{{ t('hero.description') }}</p>
-
-      <div class="links">
-        <a
-          v-for="link in profile.links"
-          :key="link.label"
-          :href="link.url"
-          :aria-label="link.label"
-          :title="link.label"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon :icon="link.icon" width="22" height="22" />
-        </a>
+      <div class="card-header">
+        <h1>{{ profile.name }}</h1>
+        <div class="links">
+          <a
+            v-for="link in profile.links"
+            :key="link.label"
+            :href="link.url"
+            :aria-label="link.label"
+            :title="link.label"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon :icon="link.icon" width="22" height="22" />
+          </a>
+        </div>
       </div>
+      <p class="location">
+        <Icon icon="mdi:map-marker-outline" width="14" height="14" aria-hidden="true" />{{
+          t('hero.location')
+        }}
+      </p>
+      <p class="description">{{ t('hero.description') }}</p>
     </div>
   </section>
 </template>
@@ -42,7 +47,15 @@ const { t } = useI18n()
   padding: 1.25rem 1.5rem;
 }
 
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 h1 {
+  min-width: 0;
   font-size: 1.6rem;
   font-weight: 500;
 }
@@ -59,8 +72,8 @@ h1 {
 
 .links {
   display: flex;
+  flex-shrink: 0;
   gap: 0.85rem;
-  margin-top: 1rem;
   color: var(--text-muted);
 }
 
