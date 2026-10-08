@@ -2,7 +2,7 @@
 
 A minimalist, black-and-white personal portfolio built with Vue 3. It is a single page where every section lives on the home page and the navigation links are just scroll shortcuts. All the content is kept in plain data files, so adding a project or changing a text never requires touching a component.
 
-**Live demo:** [Portfolio](https://portfolio-tan-seven-p35jhq7hik.vercel.app)
+**Site:** [Portfolio](https://www.gabrieldelboni.com.br)
 
 ## Technologies
 
