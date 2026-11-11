@@ -1,19 +1,61 @@
 :root {
-  --bg: #0a0a0a;
-  --surface: #101010;
-  --text: #f5f5f5;
-  --text-muted: #9a9a9a;
-  --border: #262626;
+  /* cor: preto, branco e cinzas, com o verde do logo como destaque.
+     O verde só aparece como bloco preenchido com texto escuro (contraste 8,0). */
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f0f0ee;
+  --ink: #0f0f0f;
+  --muted: #5c5c5c;
+  --accent: #5cb89a;
+  --accent-ink: #0f0f0f;
+  --stage: #0f0f0f;
+  --stage-2: #1c1c1c;
+  --stage-hover: #2b2b2b;
+  --stage-ink: #ffffff;
+  --stage-muted: #a6a6a6;
+  --stage-accent: #5cb89a;
+  --stage-accent-ink: #0f0f0f;
 
-  --content-width: 640px;
-  --header-height: 56px;
-  --radius: 10px;
-  --border-hover: #4a4a4a;
-  --motion-fast: 150ms;
-  --motion-base: 200ms;
-  --reveal-duration: 600ms;
-  --reveal-distance: 12px;
-  --switch-duration: 100ms;
+  /* tipo: cinco passos */
+  --step-name: clamp(2.2rem, 1.2rem + 2.9vw, 3.7rem);
+  --step-head: clamp(1.9rem, 1.5rem + 1.4vw, 2.6rem);
+  --step-lead: clamp(1.3rem, 1.15rem + 0.7vw, 1.7rem);
+  --step-body: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --step-note: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --font: 'Zilla Slab', Georgia, 'Times New Roman', serif;
+  --font-code: ui-monospace, 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+
+  /* espaço */
+  --measure: 46rem;
+  --section-gap: clamp(96px, 10vw, 152px);
+
+  /* movimento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-exit: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-scene: 400ms;
+  --stagger-line: 90ms;
+  --stagger-item: 60ms;
+}
+
+/* tema escuro: a leitura escurece e o palco fica um degrau abaixo */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #161616;
+  --surface: #232323;
+  --ink: #f2f2f2;
+  --muted: #a6a6a6;
+  --accent: #5cb89a;
+  --accent-ink: #0f0f0f;
+  --stage: #080808;
+  --stage-2: #181818;
+  --stage-hover: #262626;
+  --stage-ink: #f2f2f2;
+  --stage-muted: #a0a0a0;
 }
 
 *,
@@ -25,114 +67,157 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: var(--header-height);
 }
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    sans-serif;
-  line-height: 1.6;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-body);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+h2 {
+  font-size: var(--step-head);
+  margin-bottom: 28px;
+}
+
+ul,
+dl {
+  list-style: none;
+  padding: 0;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color var(--t-hover) ease;
 }
 
-.hero {
-  position: relative;
-}
-
-a,
 button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+}
+
+code {
+  font-family: var(--font-code);
+  font-size: 0.85em;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.on-stage :focus-visible {
+  outline-color: var(--stage-accent);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.55em 1.1em;
+  font-weight: 600;
+  text-decoration: none;
   transition:
-    color var(--motion-fast) ease,
-    border-color var(--motion-fast) ease,
-    opacity var(--switch-duration) ease;
+    transform var(--t-press) var(--ease-out),
+    background-color var(--t-hover) ease,
+    color var(--t-hover) ease;
 }
 
-.hoverable {
-  transition:
-    border-color var(--motion-base) ease,
-    transform var(--motion-base) ease;
+.btn:active {
+  transform: scale(0.97);
 }
 
-.hoverable:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
+.note {
+  font-size: var(--step-note);
+  color: var(--muted);
 }
 
-.tech ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0;
-  list-style: none;
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .btn:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
 }
 
-.tech li {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
+/* bloco escuro de prova, dentro da seção que ele comprova */
+.inline-scene {
+  background: var(--stage);
+  color: var(--stage-ink);
+  padding: clamp(24px, 3vw, 40px);
+  margin-top: 32px;
 }
 
-.cardtech {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-
-  padding: 0.55rem 0.8rem;
-
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-
-  font-size: 0.85rem;
+/* troca de idioma: dissolução curta da página */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--t-ui);
 }
 
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(var(--reveal-distance));
-  transition:
-    opacity var(--reveal-duration) ease,
-    transform var(--reveal-duration) ease;
+/* troca de tema: a página nova abre em círculo a partir do botão */
+.theme-spread::view-transition-old(root) {
+  animation: none;
+  z-index: 0;
 }
 
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
+.theme-spread::view-transition-new(root) {
+  animation: spread 620ms var(--ease-in-out);
+  z-index: 1;
 }
 
-main,
-.nav {
-  transition: opacity var(--switch-duration) ease;
+@keyframes spread {
+  from {
+    clip-path: circle(0 at var(--spread-x) var(--spread-y));
+  }
+
+  to {
+    clip-path: circle(150vmax at var(--spread-x) var(--spread-y));
+  }
 }
 
-.is-switching main,
-.is-switching .nav,
-.is-switching .lang {
-  opacity: 0;
+/* entradas: cada parte chega uma vez, em ordem de leitura */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--stagger-line));
+  }
+
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .hoverable:hover {
-    transform: none;
   }
 }

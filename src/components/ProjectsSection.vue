@@ -1,104 +1,69 @@
 <script setup>
-import { Icon } from '@iconify/vue'
-import { projects } from '../data/projects'
+import { projects as all } from '../data/projects'
 import { useI18n } from '../i18n'
 
 const { t, tr } = useI18n()
+
+const projects = all.filter((project) => project.featured !== false)
 </script>
 
 <template>
-  <section id="projects" class="projects">
-    <h2>{{ t('projects.title') }}</h2>
+  <section id="projects">
+    <h2 v-reveal>{{ t('projects.title') }}</h2>
 
-    <div class="list">
-      <article v-for="project in projects" :key="project.name" class="card hoverable">
-        <h3>{{ project.name }}</h3>
-        <p class="description">{{ tr(project.description) }}</p>
-
-        <ul class="stack">
-          <li v-for="tech in project.stack" :key="tech">{{ tech }}</li>
-        </ul>
-
-        <div v-if="project.links.length" class="links">
-          <a
-            v-for="link in project.links"
-            :key="link.label"
-            :href="link.url"
-            :aria-label="link.label"
-            :title="link.label"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon :icon="link.icon" width="20" height="20" />
-          </a>
-        </div>
-      </article>
-    </div>
+    <ul class="ledger">
+      <li v-for="(project, index) in projects" :key="project.name" v-reveal="1 + index">
+        <a :href="project.url" target="_blank" rel="noopener noreferrer">
+          <span class="name">{{ project.name }}</span>
+          <span class="kind">{{ tr(project.kind) }}</span>
+          <span class="note state">{{ tr(project.state) }}</span>
+        </a>
+      </li>
+    </ul>
   </section>
 </template>
 
 <style scoped>
-.projects {
-  padding: 2rem 0;
+/* as linhas chegam uma a uma, mais juntas que parágrafos */
+li {
+  --stagger-line: var(--stagger-item);
 }
 
-h2 {
-  font-size: 1.15rem;
-  font-weight: 500;
-  margin-bottom: 0.85rem;
-}
-
-.list {
+a {
   display: grid;
-  gap: 0.85rem;
+  grid-template-columns: 42% 1fr;
+  gap: 0 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  text-decoration: none;
+  transition: opacity var(--t-hover) ease;
 }
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
+.name {
+  font-weight: 600;
 }
 
-h3 {
-  font-size: 1rem;
-  font-weight: 500;
+.kind {
+  font-size: var(--step-note);
 }
 
-.description {
-  margin-top: 0.25rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+.state {
+  grid-column: 2;
 }
 
-.stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.75rem;
-  padding: 0;
-  list-style: none;
-  font-size: 0.75rem;
+@media (hover: hover) and (pointer: fine) {
+  .ledger:hover a:not(:hover) {
+    opacity: 0.45;
+  }
 }
 
-.stack li {
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 0.1rem 0.5rem;
-}
+@media (max-width: 480px) {
+  a {
+    grid-template-columns: 1fr;
+  }
 
-.links {
-  display: flex;
-  gap: 0.85rem;
-  margin-top: 0.75rem;
-  color: var(--text-muted);
-}
-
-.links a {
-  display: flex;
-}
-
-.links a:hover {
-  color: var(--text);
+  .state {
+    grid-column: 1;
+  }
 }
 </style>
