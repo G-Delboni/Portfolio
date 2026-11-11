@@ -1,5 +1,7 @@
 # Portfolio
 
+🌐 **English** · [Português](README.pt-BR.md)
+
 Personal site of Gabriel Delboni Dias, software developer focused on AI Engineering. It is a single column, in Portuguese and English, with a light and a dark theme.
 
 **Site:** [gabrieldelboni.com.br](https://www.gabrieldelboni.com.br)
