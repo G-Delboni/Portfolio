@@ -1,73 +1,47 @@
 <script setup>
+import { ref } from 'vue'
 import { experience } from '../data/experience'
+import NumbersScene from './NumbersScene.vue'
 import { useI18n } from '../i18n'
+import { useSeen } from '../seen'
 
 const { t, tr } = useI18n()
+
+// os números contam quando o bloco aparece na tela
+const inline = ref(null)
+const inlineSeen = useSeen(inline)
 </script>
 
 <template>
-  <section id="experience" class="experience">
-    <h2>{{ t('experience.title') }}</h2>
+  <section id="experience">
+    <h2 v-reveal>{{ t('experience.title') }}</h2>
 
-    <p v-if="!experience.length" class="empty">
-      {{ t('experience.empty') }}
-    </p>
+    <article v-for="item in experience" :key="item.company">
+      <h3 v-reveal="1">{{ tr(item.role) }}</h3>
+      <p v-reveal="1" class="note when">{{ item.company }} · {{ tr(item.period) }}</p>
+      <p v-for="(paragraph, index) in item.paragraphs" :key="index" v-reveal="2 + index">
+        {{ tr(paragraph) }}
+      </p>
+    </article>
 
-    <div v-else class="list">
-      <article v-for="item in experience" :key="item.company + item.period" class="item">
-        <h3>{{ tr(item.role) }} · {{ item.company }}</h3>
-        <p class="period">{{ item.period }}</p>
-        <p class="description">{{ tr(item.description) }}</p>
-      </article>
+    <div ref="inline" class="inline-scene on-stage">
+      <NumbersScene :active="inlineSeen" />
     </div>
   </section>
 </template>
 
 <style scoped>
-.experience {
-  padding: 2rem 0;
-}
-
-h2 {
-  font-size: 1.15rem;
-  font-weight: 500;
-  margin-bottom: 0.85rem;
-}
-
-.empty {
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-
-.list {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-}
-
 h3 {
-  font-size: 1rem;
+  font-size: var(--step-lead);
   font-weight: 500;
+  line-height: 1.25;
 }
 
-.period {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+.when {
+  margin: 6px 0 20px;
 }
 
-.description {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+p + p {
+  margin-top: 16px;
 }
 </style>

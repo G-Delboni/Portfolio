@@ -1,10 +1,36 @@
 <!doctype html>
-<html lang="">
+<html lang="pt-BR">
   <head>
-    <meta charset="UTF-8" lang="en" />
-    <link rel="icon" href="/favicon.ico" />
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gabriel Delboni Dias</title>
+    <title>Gabriel Delboni Dias · Engenharia de IA</title>
+    <meta
+      name="description"
+      content="Desenvolvedor de software com foco em Engenharia de IA: agentes com LLMs, tool calling, guardrails e evals, com base em backend e segurança."
+    />
+    <meta name="theme-color" content="#0f0f0f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.gabrieldelboni.com.br/" />
+    <meta property="og:title" content="Gabriel Delboni Dias · Engenharia de IA" />
+    <meta
+      property="og:description"
+      content="Desenvolvedor de software que constrói agentes com LLMs, com base em backend e segurança."
+    />
+    <script>
+      // define o tema antes da primeira pintura, para a página não piscar
+      ;(function () {
+        var theme
+        try {
+          theme = localStorage.getItem('theme')
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>
