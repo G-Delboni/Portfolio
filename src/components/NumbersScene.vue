@@ -39,38 +39,42 @@ watch(
 <template>
   <div class="numbers">
     <ul>
-      <li v-for="(item, index) in numbers" :key="index" :class="{ phrase: item.value === null }">
-        <span v-if="item.value !== null" class="figure" aria-hidden="true">{{ shown[index] }}</span>
-        <span>
-          <span v-if="item.value !== null" class="sr-only">{{ item.value }}</span>
-          {{ tr(item.label) }}
-        </span>
-      </li>
+      <!-- só os itens com número entram na grade; a frase vem logo abaixo -->
+      <template v-for="(item, index) in numbers" :key="index">
+        <li v-if="item.value !== null">
+          <span class="figure" aria-hidden="true">{{ shown[index] }}</span>
+          <span class="label">
+            <span class="sr-only">{{ item.value }}</span>
+            {{ tr(item.label) }}
+          </span>
+        </li>
+      </template>
     </ul>
+
+    <template v-for="(item, index) in numbers" :key="`p${index}`">
+      <p v-if="item.value === null" class="phrase">{{ tr(item.label) }}</p>
+    </template>
+
     <p class="scene-note">{{ t('numbers.note') }}</p>
   </div>
 </template>
 
 <style scoped>
-li {
+.numbers {
   --figure: clamp(3.4rem, 2rem + 4.4vw, 5.4rem);
+}
+
+/* números à esquerda, todos no mesmo x; rótulos começam na mesma coluna */
+li {
   display: grid;
-  /* coluna larga o bastante para o maior número, para os três alinharem à direita */
-  grid-template-columns: calc(var(--figure) * 1.75) 1fr;
+  grid-template-columns: calc(var(--figure) * 1.7) 1fr;
   gap: clamp(16px, 2vw, 28px);
-  align-items: center;
-  font-size: var(--step-lead);
+  align-items: baseline;
   line-height: 1.2;
 }
 
-/* o item sem número ocupa a linha toda, alinhado ao início dos números */
-li.phrase {
-  grid-template-columns: 1fr;
-  padding-left: calc(var(--figure) * 1.75 + clamp(16px, 2vw, 28px));
-}
-
 li + li {
-  margin-top: clamp(20px, 3vh, 36px);
+  margin-top: clamp(16px, 2.5vh, 28px);
 }
 
 .figure {
@@ -78,12 +82,23 @@ li + li {
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 0.9;
-  text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
+.label {
+  font-size: var(--step-lead);
+}
+
+/* a frase sem número usa a largura toda, no mesmo x dos números */
+.phrase {
+  margin-top: clamp(24px, 4vh, 40px);
+  font-size: var(--step-lead);
+  line-height: 1.25;
+  max-width: 34ch;
+}
+
 .scene-note {
-  margin-top: clamp(28px, 5vh, 48px);
+  margin-top: clamp(24px, 4vh, 40px);
   font-size: var(--step-note);
   color: var(--stage-muted);
 }
